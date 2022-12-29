@@ -1,0 +1,50 @@
+body {
+  background: rgb(56, 52, 83);
+  color: rgb(69, 220, 74);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-left: 5px;
+  list-style: none;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 0;
+  transition: 0.2s linear;
+}
+
+h3:hover {
+  cursor: pointer;
+  background: rgb(79, 74, 112);
+}
+
+.leaf-icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.add-icon {
+  width: 12px;
+  height: 12px;
+  margin: 5px 5px 0 0;
+  float: right;
+  display: none;
+  transition: 0.2s linear;
+}
+
+.folder {
+  max-width: 20vw;
+}
+
+h3:hover > .add-icon {
+  display: inline;
+}
