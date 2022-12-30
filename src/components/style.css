@@ -48,3 +48,24 @@ h3:hover {
 h3:hover > .add-icon {
   display: inline;
 }
+
+.context-menu {
+  position: absolute;
+  font-size: 14px;
+  width: 80px;
+  height: 45px;
+  background: rgb(56, 52, 83);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.context-menu li {
+  margin: 0;
+  padding: 3px 7px;
+  color: #fff;
+  transition: 0.2s linear;
+}
+
+.context-menu li:hover {
+  background: rgb(79, 74, 112);
+}

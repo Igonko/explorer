@@ -12,6 +12,7 @@ export const directory = {
           id: 7,
           name: "Test",
           type: "folder",
+          files: []
         },
         {
           id: 8,

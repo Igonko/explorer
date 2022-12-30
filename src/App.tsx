@@ -12,23 +12,37 @@ export type Leaf = {
 const App: React.FC = () => {
   const [initial, setInitial] = useState<Leaf>(directory);
 
-  const addNewLeaf = (name: string, type: string, id: number) => {
+  const addNewLeaf = (type: string, id: number) => {
+    const updatedDirectory = initial;
     const newLeaf = {
       id: Date.now(),
-      name,
+      name: type === "file" ? "new file" : "new folder",
       type,
       files: type === "file" ? undefined : [],
     };
 
-    const newDirectory = {
-      ...initial,
-      newLeaf,
-    };
+    if (updatedDirectory.id !== id && updatedDirectory.files) {
+      const findLeaf = (branch: Leaf) => {
+        branch.files &&
+          branch.files.map((leaf) => {
+            if (leaf.id !== id) {
+              return findLeaf(leaf);
+            }
 
-    setInitial(newDirectory);
+            leaf.files && leaf.files.push(newLeaf);
+
+            return leaf;
+          });
+      };
+
+      findLeaf(updatedDirectory);
+    }
+    if (updatedDirectory.id === id) {
+      updatedDirectory.files && updatedDirectory.files.push(newLeaf);
+    }
+
+    setInitial({ ...updatedDirectory });
   };
-
-  console.log(initial);
 
   return <Tree directory={initial} addNewLeaf={addNewLeaf} />;
 };
