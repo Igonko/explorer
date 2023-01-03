@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import Tree from "./components/Tree";
 import { directory } from "./files/directory";
-
-export type Leaf = {
-  id: number;
-  name: string;
-  type: string;
-  files?: Leaf[];
-};
+import { findLeaf } from "./helpers/findLeaf";
+import { Variant } from "./types/enums";
+import { Leaf } from "./types/types";
 
 const App: React.FC = () => {
   const [initial, setInitial] = useState<Leaf>(directory);
@@ -22,20 +18,7 @@ const App: React.FC = () => {
     };
 
     if (updatedDirectory.id !== id && updatedDirectory.files) {
-      const findLeaf = (branch: Leaf) => {
-        branch.files &&
-          branch.files.map((leaf) => {
-            if (leaf.id !== id) {
-              return findLeaf(leaf);
-            }
-
-            leaf.files && leaf.files.push(newLeaf);
-
-            return leaf;
-          });
-      };
-
-      findLeaf(updatedDirectory);
+      findLeaf(updatedDirectory, id, Variant.CREATE, newLeaf);
     }
     if (updatedDirectory.id === id) {
       updatedDirectory.files && updatedDirectory.files.push(newLeaf);
@@ -44,7 +27,26 @@ const App: React.FC = () => {
     setInitial({ ...updatedDirectory });
   };
 
-  return <Tree directory={initial} addNewLeaf={addNewLeaf} />;
+  const renameLeaf = (id: number, name: string) => {
+    const updatedDirectory = initial;
+
+    if (!name) {
+      return;
+    }
+
+    if (updatedDirectory.id === id) {
+      updatedDirectory.name = name;
+    } else {
+      updatedDirectory.files &&
+        findLeaf(updatedDirectory, id, Variant.RENAME, undefined, name);
+    }
+
+    setInitial({ ...updatedDirectory });
+  };
+
+  return (
+    <Tree directory={initial} addNewLeaf={addNewLeaf} renameLeaf={renameLeaf} />
+  );
 };
 
 export default App;

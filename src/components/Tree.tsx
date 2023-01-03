@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Leaf } from "../App";
 import { fileExtension, folderImage } from "../helpers/findImage";
+import { LeafType } from "../types/enums";
+import { Leaf } from "../types/types";
 import ContextMenu from "./ContextMenu";
 import "./style.css";
-
-export enum LeafType {
-  FILE = "file",
-  FOLDER = "folder",
-}
 
 type Directory = {
   directory: Leaf;
   addNewLeaf: (type: string, id: number) => void;
+  renameLeaf: (d: number, name: string) => void;
 };
 
-const Tree: React.FC<Directory> = ({ directory, addNewLeaf }) => {
+const Tree: React.FC<Directory> = ({ directory, addNewLeaf, renameLeaf }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -69,7 +66,11 @@ const Tree: React.FC<Directory> = ({ directory, addNewLeaf }) => {
           {isOpen &&
             directory.files?.map((file) => (
               <li key={file.id}>
-                <Tree directory={file} addNewLeaf={addNewLeaf} />
+                <Tree
+                  directory={file}
+                  addNewLeaf={addNewLeaf}
+                  renameLeaf={renameLeaf}
+                />
               </li>
             ))}
         </ul>

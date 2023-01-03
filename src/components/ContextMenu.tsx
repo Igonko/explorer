@@ -1,10 +1,7 @@
 import React from "react";
+import { ContextMenuProps } from "../types/types";
 
-type Coordinates = {
-  coordinates: Record<string, number>;
-};
-
-const ContextMenu: React.FC<Coordinates> = ({ coordinates }) => {
+const ContextMenu: React.FC<ContextMenuProps> = ({ coordinates }) => {
   return (
     <div
       className="context-menu"
